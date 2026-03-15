@@ -897,15 +897,14 @@ export default function Home() {
               Un recorrido real por la plataforma: desde la conversación con el huésped hasta el dashboard de resultados.
             </p>
           </motion.div>
-          <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-slate-900 aspect-video flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-teal-600/20 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-teal-600/30 transition-colors">
-                <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 ml-1">
-                  <path d="M8 5.14v14l11-7-11-7z" />
-                </svg>
-              </div>
-              <p className="text-slate-400 text-sm">Video demo disponible próximamente</p>
-            </div>
+          <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-slate-900 aspect-video">
+            <iframe
+              src="https://www.youtube.com/embed/xtCHKXWA3Pw?rel=0&modestbranding=1"
+              title="Kontesta Hotels — Demostración"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
           </motion.div>
         </div>
       </Section>
