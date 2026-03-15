@@ -373,6 +373,7 @@ const STEPS = [
 
 /* ─────────────────────────── MAIN PAGE ─────────────────────────── */
 export default function Home() {
+  const [mobileMenu, setMobileMenu] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -423,13 +424,63 @@ export default function Home() {
             <a href="#precios" className="hover:text-teal-600 transition-colors">Precios</a>
             <a href="#faq" className="hover:text-teal-600 transition-colors">FAQ</a>
           </div>
-          <a
-            href="#contacto"
-            className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:shadow-lg hover:shadow-teal-200"
-          >
-            Prueba 20 días gratis
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="#contacto"
+              className="hidden sm:inline-flex bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:shadow-lg hover:shadow-teal-200"
+            >
+              Prueba 20 días gratis
+            </a>
+            <button
+              onClick={() => setMobileMenu(!mobileMenu)}
+              className="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
+              aria-label="Menú"
+            >
+              {mobileMenu ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6 text-slate-700">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6 text-slate-700">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
+        {/* Mobile menu */}
+        {mobileMenu && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white border-t border-slate-100 px-4 py-4 space-y-1"
+          >
+            {[
+              { label: "Funcionalidades", href: "#funcionalidades" },
+              { label: "Cómo funciona", href: "#como-funciona" },
+              { label: "Precios", href: "#precios" },
+              { label: "FAQ", href: "#faq" },
+              { label: "Contacto", href: "#contacto" },
+            ].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenu(false)}
+                className="block px-4 py-3 rounded-xl text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-600 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="#contacto"
+              onClick={() => setMobileMenu(false)}
+              className="block text-center mt-3 bg-teal-600 hover:bg-teal-700 text-white px-5 py-3 rounded-full text-sm font-semibold transition-all"
+            >
+              Prueba 20 días gratis
+            </a>
+          </motion.div>
+        )}
       </nav>
 
       {/* ──────── HERO ──────── */}
@@ -909,6 +960,51 @@ export default function Home() {
         </div>
       </Section>
 
+      {/* ──────── INTEGRATIONS ──────── */}
+      <Section className="py-20 lg:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div variants={fadeUp} className="text-center max-w-3xl mx-auto mb-14">
+            <span className="text-sm font-semibold text-teal-600 uppercase tracking-wider">Integraciones</span>
+            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mt-3 mb-4">
+              Se conecta con lo que ya usas
+            </h2>
+            <p className="text-lg text-slate-500">
+              Kontesta Hotels se integra con los principales PMS, OTAs y plataformas del sector hotelero.
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {[
+              { name: "Booking.com", category: "OTA", color: "bg-blue-50 border-blue-100 text-blue-700" },
+              { name: "Airbnb", category: "OTA", color: "bg-rose-50 border-rose-100 text-rose-700" },
+              { name: "Google", category: "Reseñas & Reservas", color: "bg-emerald-50 border-emerald-100 text-emerald-700" },
+              { name: "TripAdvisor", category: "Reseñas", color: "bg-green-50 border-green-100 text-green-700" },
+              { name: "WhatsApp", category: "Mensajería", color: "bg-green-50 border-green-100 text-green-700" },
+              { name: "Mews", category: "PMS", color: "bg-indigo-50 border-indigo-100 text-indigo-700" },
+              { name: "Cloudbeds", category: "PMS", color: "bg-sky-50 border-sky-100 text-sky-700" },
+              { name: "Opera PMS", category: "PMS", color: "bg-orange-50 border-orange-100 text-orange-700" },
+              { name: "Sextaplanta", category: "PMS", color: "bg-violet-50 border-violet-100 text-violet-700" },
+              { name: "Expedia", category: "OTA", color: "bg-yellow-50 border-yellow-100 text-yellow-700" },
+              { name: "Stripe", category: "Pagos", color: "bg-purple-50 border-purple-100 text-purple-700" },
+              { name: "Gmail / SMTP", category: "Email", color: "bg-red-50 border-red-100 text-red-700" },
+            ].map((int, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                className={`rounded-xl p-5 border text-center hover:shadow-md transition-all duration-300 ${int.color}`}
+              >
+                <p className="font-semibold text-sm mb-1">{int.name}</p>
+                <p className="text-[11px] opacity-70">{int.category}</p>
+              </motion.div>
+            ))}
+          </div>
+          <motion.p variants={fadeUp} className="text-center text-sm text-slate-400 mt-8">
+            ¿Usas otro PMS o plataforma? Contáctanos y evaluamos la integración sin compromiso.
+          </motion.p>
+        </div>
+      </Section>
+
+      <div className="section-divider max-w-5xl mx-auto" />
+
       {/* ──────── HOW IT WORKS ──────── */}
       <Section id="como-funciona" className="py-20 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1238,6 +1334,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ──────── FLOATING WHATSAPP BUTTON ──────── */}
+      <a
+        href="https://wa.me/34624013936?text=Hola%2C%20me%20interesa%20Kontesta%20Hotels"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 transition-all hover:scale-110"
+        aria-label="Contactar por WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+        </svg>
+      </a>
+
       {/* ──────── FOOTER ──────── */}
       <footer className="bg-slate-950 border-t border-slate-800 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1257,9 +1366,9 @@ export default function Home() {
               </a>
             </p>
             <div className="flex items-center gap-6 text-sm text-slate-500">
-              <a href="https://cpgestudioia.tech/privacidad" className="hover:text-slate-300 transition-colors">Privacidad</a>
-              <a href="https://cpgestudioia.tech/aviso-legal" className="hover:text-slate-300 transition-colors">Aviso legal</a>
-              <a href="https://cpgestudioia.tech/cookies" className="hover:text-slate-300 transition-colors">Cookies</a>
+              <a href="/privacidad" className="hover:text-slate-300 transition-colors">Privacidad</a>
+              <a href="/aviso-legal" className="hover:text-slate-300 transition-colors">Aviso legal</a>
+              <a href="/cookies" className="hover:text-slate-300 transition-colors">Cookies</a>
             </div>
           </div>
           <div className="mt-8 text-center text-xs text-slate-600">
